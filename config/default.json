@@ -1,0 +1,21 @@
+{
+    "server":{
+        "port":3000
+    },
+    "development":{
+        "username":"root",
+        "password":"",
+        "database":"letramentodb",
+        "host":"localhost",
+        "dialect":"mariadb",
+        "port":"3306"
+    },
+    "database":{
+        "host":"localhost",
+        "port":"3306",
+        "user":"root",
+        "password":"",
+        "database":"letramentodb"
+    }
+
+}
