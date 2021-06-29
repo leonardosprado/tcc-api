@@ -15,7 +15,7 @@ module.exports = () => {
             const rows = await conn.query("select id_usuario, username, nome, sexo, telefone, data_nascimento,data_nascimento from usuario;");
             res.status(200).send({message:rows});
             var response = (rows[0])
-            const monitor  = require("../models/monitor")(response.id,response.nome,response.data_criacao,response.data_alteracao,response.date_nascimento,response.sexo,response.id_monitor,response.email,response.curso);
+            // const monitor  = require("../models/monitor")(response.id,response.nome,response.data_criacao,response.data_alteracao,response.date_nascimento,response.sexo,response.id_monitor,response.email,response.curso);
             // console.log(monitor.response());
         } catch (error) {
             // console.log(error);
