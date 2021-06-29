@@ -2,7 +2,7 @@ const { response } = require('express');
 const db = require('../../config/database');
 const { jwt, verification } = require('../../config/jwt');
 const Monitor = require('../models/monitor/monitor.service');
-const Usuario = require('../models/user/user.model');
+const Usuario = require('../models/user/user.model.js');
 
 module.exports = () => {
     const database = require("../../config/database").pool;
