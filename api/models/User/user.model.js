@@ -1,4 +1,3 @@
-
 var jwt = require('../../../config/jwt').jwt;
 var database = require('../../../config/database').pool;
 
