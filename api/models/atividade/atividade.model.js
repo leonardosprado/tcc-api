@@ -1,4 +1,4 @@
-const { getByIdAprendiz } = require('../user/user.model');
+
 
 var jwt = require('../../../config/jwt').jwt;
 var database = require('../../../config/database').pool;
@@ -376,7 +376,7 @@ Atividade.elaboraAtividade = async function(monitor_id,data){
         let current_datetime = new Date()
         let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds() 
         console.log(data);
-        const aprendiz = getByIdAprendiz(data.id_aprendiz);
+        // const aprendiz = getByIdAprendiz(data.id_aprendiz);
        
         const conn = await database.getConnection();
         const sql = `INSERT INTO atividade_programada(data_criacao,data_alteracao,id_monitor,id_atividade,id_aprendiz) 
