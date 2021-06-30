@@ -1,4 +1,4 @@
-const { getByIdAprendiz } = require('../User/user.model');
+const { getByIdAprendiz } = require('../user/user.model');
 
 var jwt = require('../../../config/jwt').jwt;
 var database = require('../../../config/database').pool;
