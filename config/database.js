@@ -8,7 +8,8 @@ pool = mysql.createPool({
     user:process.env.MYSQL_USER,
     password:process.env.MYSQL_PASSWORD,
     database:process.env.MYSQL_DATABASE,
-    connectionLimit:5
+    connectionLimit:5,
+    insecureAuth : true
 });
 
 module.exports.pool = pool;
