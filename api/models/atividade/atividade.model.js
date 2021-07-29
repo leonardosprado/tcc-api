@@ -270,8 +270,8 @@ Atividade.prototype.createAtividade = async function(){
             console.log(this.url_img);
             console.log(this.url_img.replace(/\\/g,"/"));
             var result = await conn.query(`
-            INSERT INTO atividade(sugestao_resposta,nivel,palavra,img_name,url_img, id_monitor,data_criacao,data_alteracao)
-             VALUES ('${this.data.sugestao_resposta}','${this.data.nivel}','${this.data.palavra}','${this.img_name}','${this.url_img.replace(/\\/g,"/")}','${this.monitor_id}','${formatted_date}','${formatted_date}')
+            INSERT INTO atividade(questao,sugestao_resposta,nivel,palavra,img_name,url_img, id_monitor,data_criacao,data_alteracao)
+             VALUES ('${this.data.questao}','${this.data.sugestao_resposta}','${this.data.nivel}','${this.data.palavra}','${this.img_name}','${this.url_img.replace(/\\/g,"/")}','${this.monitor_id}','${formatted_date}','${formatted_date}')
             `);
             conn.release();
             var rows = JSON.parse(JSON.stringify(result[0]));
