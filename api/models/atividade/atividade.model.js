@@ -450,7 +450,7 @@ Atividade.verificaAtividadeProgramada = async function(id_aprendiz,data){
         // let current_datetime = new Date()
         // let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds() 
         const conn = await database.getConnection();
-        const sql = "select * from atividade_programada WHERE id_aprendiz=? AND (status IS NULL OR NOT(STATUS=1));"
+        const sql = "select * from atividade_programada WHERE id_aprendiz=? AND (status IS NULL OR NOT(STATUS=1)) ORDER BY data_alteracao;";
         
         const values = [id_aprendiz];
         var [rows] = await conn.query(sql,values);
