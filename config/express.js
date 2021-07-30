@@ -6,8 +6,8 @@ const config     = require('config');
 const consign = require('consign');
 var cors = require('cors')
 
-var multer = require('multer');
-var upload = multer();
+// var multer = require('multer');
+// var upload = multer();
 
 // global.__basedir = __dirname;
 
