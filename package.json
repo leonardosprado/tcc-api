@@ -21,9 +21,11 @@
     "jsonwebtoken": "^8.5.1",
     "mariadb": "^2.4.2",
     "multer": "^1.4.2",
+    "multer-sftp": "^1.1.1",
     "mysql2": "^2.2.5",
     "nodemon": "^2.0.4",
     "sequelize": "^6.3.5",
+    "ssh2-sftp-client": "^7.0.0",
     "util": "^0.12.3",
     "uuidv4": "^6.2.5"
   },
