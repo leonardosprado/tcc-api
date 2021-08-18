@@ -5,6 +5,7 @@ const uploadFile = require('../middleware/upload');
 const Atividade = require("../models/atividade/atividade.model");
 
 var multer = require('multer');
+const { deleteAtividade } = require('../models/atividade/atividade.model');
 var upload = multer();
 
 module.exports = () => {
@@ -91,6 +92,28 @@ module.exports = () => {
             if(verify.message.type == 1){
                 var atividade = new Atividade(req.body);
                 var response  = await atividade.alterAtividade(id);
+                res.status(200).send(response);
+            }
+            else{
+                throw {message:"Sem permissão!"}
+            }
+            
+        } catch (err) {
+            res.status(500).send(err);
+        }
+    }
+
+    controller.deleteAtividade = async(req, res) => {
+        try {
+            var id = req.params.id;
+
+            var token = req.headers['x-access-token'];
+            const verify = await verification(token);
+            if(verify.auth==false){
+                throw verify;
+            }
+            if(verify.message.type == 1){
+                var response  = await Atividade.deleteAtividade(id);
                 res.status(200).send(response);
             }
             else{
@@ -285,14 +308,10 @@ module.exports = () => {
                 throw verify;
             }
             if(verify.message.type == 2||verify.message.type == 1){
-                var aprendiz_id = verify.message.id;
-                var data = req.body;
+    
+                var response  = await Atividade.atividadeRealizada();
+                res.status(200).send(response);
                
-                    var response  = await Atividade.atividadeRealizada();
-                    res.status(200).send(response);
-               
-               
-                // var atividade = new Atividade(data,monitor_id,url_img,img_name);
             }
             else{
                 throw {message:"Sem permissão!"}

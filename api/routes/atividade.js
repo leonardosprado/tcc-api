@@ -12,6 +12,8 @@ module.exports = app => {
     app.route('/api/v1/atividade/:id').get(controller.getById);
     
     app.route('/api/v1/alter_atividade/:id').put(controller.alterAtividade);
+
+    app.route('/api/v1/delete_atividade/:id').delete(controller.deleteAtividade);
     
     app.route('/api/v1/elabora_atividade').post(controller.elaboraAtividade);
     

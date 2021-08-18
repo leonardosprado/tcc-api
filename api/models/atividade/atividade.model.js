@@ -27,11 +27,10 @@ Atividade.getAll = async function(){
     const conn = await database.getConnection();
     
     try {
-        
-        var result = await conn.query(`
-            select * from atividade;
-        `);
-        var rows = JSON.parse(JSON.stringify(result[0]));
+        const sql = "select * from atividade;";
+        var [rows] = await conn.query(sql);
+        conn.release();
+
         if(rows.length<1){
             throw {message:"Nenhuma atividade encontrada!"}
         }
@@ -59,10 +58,10 @@ Atividade.atividadesNRealizadas = async function(){
     
     try {
         
-        var result = await conn.query(`
-            select * from atividade_programada where COALESCE(status,'') <> 1;
-        `);
-        var rows = JSON.parse(JSON.stringify(result[0]));
+        const sql = " select * from atividade_programada where COALESCE(status,'') <> 1;";
+        var [rows] = await conn.query(sql);
+        conn.release();
+
         if(rows.length<1){
             throw {message:"Nenhuma atividade encontrada!"}
         }
@@ -84,15 +83,16 @@ Atividade.atividadesNRealizadas = async function(){
     }
 }
 
+// Atividades Realizadas
 Atividade.atividadeRealizada = async function(){
     const conn = await database.getConnection();
     
     try {
-        
-        var result = await conn.query(`
-            select * from atividade_programada where status=1;
-        `);
-        var rows = JSON.parse(JSON.stringify(result[0]));
+     
+        const sql = "select * from atividade_programada where status=1;";
+        var [rows] = await conn.query(sql);
+        conn.release();
+ 
         if(rows.length<1){
             throw {message:"Nenhuma atividade encontrada!"}
         }
@@ -104,7 +104,6 @@ Atividade.atividadeRealizada = async function(){
                 // list.push(monitor.ListDadosMonitor());
             })
         }
-        conn.release();
         return rows;
         
         
@@ -127,42 +126,10 @@ Atividade.atividadeRealizadaSearch = async function(search){
             INNER JOIN usuario t3 ON (t2.id_usuario = t3.id_usuario)  
             where t2.apelido LIKE ? OR t3.nome LIKE ?;
         `;
-
-        // select t1.* 
-        // from 
-        // atividade_programada t1
-        // INNER JOIN aprendiz t2 ON (t1.id_aprendiz = t2.id_aprendiz)  
-        // INNER JOIN usuario t3 ON (t2.id_usuario = t3.id_usuario)  
-        // where t2.apelido LIKE '%Gustavinh%' AND t3.nome LIKE '%Gustavinh%'
-
-
-        // select t1.* 
-        // from 
-        // atividade_programada t1
-        // INNER JOIN aprendiz t2 ON (t1.id_aprendiz = t2.id_aprendiz)   
-        // where t2.apelido LIKE '%Gus%'
-        // UNION
-        // select t1.* 
-        // from 
-        // atividade_programada t1
-        // INNER JOIN aprendiz t2 ON (t1.id_aprendiz = t2.id_aprendiz)   
-        // INNER JOIN usuario t3 ON (t2.id_usuario = t3.id_usuario) 
-        // where  t3.nome LIKE '%Gus%'
-
         const values = [search,search];
-        // var rows = JSON.parse(JSON.stringify(result[0]));
-        // if(rows.length<1){
-        //     throw {message:"Nenhuma atividade encontrada!"}
-        // }
         var [rows] = await conn.query(sql,values);
-        // const list = Array();
-        // if(rows){
-        //     rows.map(async (item,i)=>{
-        //         // var monitor = await new Atividade(item,1);
-        //         // list.push(monitor.ListDadosMonitor());
-        //     })
-        // }
         conn.release();
+
         return rows;
         
         
@@ -297,10 +264,10 @@ Atividade.prototype.createAtividade = async function(){
 
 
 Atividade.getById = async function(id){
-    const conn = await database.getConnection();
     
     try {
         
+        const conn = await database.getConnection();
         var result = await conn.query(`
             select * from atividade where id_atividade IN (${id});
         `);
@@ -308,14 +275,6 @@ Atividade.getById = async function(id){
         if(rows.length<1){
             throw {message:"Nenhuma atividade encontrada!"}
         }
-        // console.log(rows);
-        // const list = Array();
-        // if(rows){
-        //     rows.map(async (item,i)=>{
-        //         var monitor = await new Atividade(item,1);
-        //         list.push(monitor.ListDadosMonitor());
-        //     })
-        // }
         conn.release();
         return rows;
         
@@ -335,8 +294,8 @@ Atividade.prototype.alterAtividade = async function(id){
         
         const conn = await database.getConnection();
 
-        const sql = "UPDATE atividade SET data_alteracao=?, sugestao_resposta=?, nivel=?, palavra=?  WHERE id_atividade=?;";
-        const values = [formatted_date,this.data.sugestao_resposta,this.data.nivel,this.data.palavra,id];
+        const sql = "UPDATE atividade SET data_alteracao=?, sugestao_resposta=?, nivel=?, palavra=?, questao=?  WHERE id_atividade=?;";
+        const values = [formatted_date, this.data.sugestao_resposta, this.data.nivel, this.data.palavra, this.data.questao, id];
         var [rows] = await conn.query(sql,values);
         conn.release();
         return rows;
@@ -348,6 +307,24 @@ Atividade.prototype.alterAtividade = async function(id){
     }
 }
 
+Atividade.deleteAtividade = async function(id){
+
+    try {
+    
+        const conn = await database.getConnection();
+        const sql = "DELETE FROM atividade WHERE id_atividade=?;";
+        const values = [id];
+        var [rows] = await conn.query(sql,values);
+        console.log(rows);
+        conn.release();
+        return rows;
+        
+    } catch (error) {
+        // console.log(error);
+        conn.release();
+        return error;
+    }
+}
 
 Atividade.prototype.alterImageAtividade = async function(id){
 
